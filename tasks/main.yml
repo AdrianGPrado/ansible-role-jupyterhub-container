@@ -1,2 +1,6 @@
 ---
 # tasks file for jupyterhub
+- fail: msg="jupyterhub_admin_user is not defined"
+  when: jupyterhub_admin_user == ''
+
+- include: jupyterhub.yml
