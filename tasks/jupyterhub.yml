@@ -9,19 +9,21 @@
 - name: Create JupyterHub service folder
   file:
   file:
-    path: '/srv/jupyterhub'
-    state: 'directory'
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
+    path='{{ item }}'
+    state='directory'
+    owner='root'
+    group='root'
+    mode='0755'
+  with_items:
+    - /srv/jupyterhub
+    - /srv/jupyterhub_users
 
 - name: Copy JupyterHub docker file to server
   copy: 
     src=jupyterhub.Dockerfile
     dest=/srv/jupyterhub/Dockerfile
 
-# - name: create the jupyterhub_users directory
-#   file: path=/srv/jupyterhub_users state=directory
-
-# - name: create the userlist
-#   template: src=userlist.j2 dest=/srv/jupyterhub_users/userlist
+- name: create the userlist
+  template:
+    src=userlist.j2
+    dest=/srv/jupyterhub_users/userlist
