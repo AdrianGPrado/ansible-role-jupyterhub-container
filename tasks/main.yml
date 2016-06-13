@@ -5,3 +5,4 @@
 
 - include: jupyterhub.yml
 - include: swarm.yml
+- include: cull.yml
