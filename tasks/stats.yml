@@ -1,0 +1,22 @@
+---
+# Docker image for culling idle notebook servers. Requires a token from 
+# JupyterHub, e.g.
+#
+# export token=$(jupyterhub token -f /path/to/jupyterhub_config.py $JHUB_ADMIN)
+# docker run -e "JPY_ADMIN_TOKEN=$token" compmodels/cull \
+#             --timeout=86400 \
+#             --cull_every=3600 \
+#             --url=http://[jupyterhub_ip]:8081/hub
+
+- name: create the /srv/stats_db directory
+  file: 
+    path='{{ item }}'
+    state=directory
+  with_items:
+    - /srv/stats
+    - /srv/stats_db
+
+- name: Copy cull docker file to server
+  copy: 
+    src=stats.Dockerfile
+    dest=/srv/stats/Dockerfile
