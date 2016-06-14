@@ -8,15 +8,33 @@
 #             --cull_every=3600 \
 #             --url=http://[jupyterhub_ip]:8081/hub
 
-- name: create the /srv/stats_db directory
-  file: 
-    path='{{ item }}'
-    state=directory
-  with_items:
-    - /srv/stats
-    - /srv/stats_db
+# - name: create the /srv/stats_db directory
+#   file: 
+#     path='{{ item }}'
+#     state=directory
+#   with_items:
+#     - /srv/stats
+#     - /srv/stats_db
 
-- name: Copy cull docker file to server
-  copy: 
-    src=stats.Dockerfile
-    dest=/srv/stats/Dockerfile
+# - name: Create JupyterHub service folder
+#   file: path={{ item[0] }} state={{ item[1] }}
+#   with_nested:
+#     - [ /srv/stats, /srv/stats_db ]
+#     - [ absent, directory ]
+
+# # - name: Copy cull docker file to server
+# #   copy: 
+# #     src=stats.Dockerfile
+# #     dest=/srv/stats/Dockerfile
+
+# - name: clone the dockerfile git repository
+#   git: repo=https://github.com/AdrianGPrado/docker-jupyterhub-stats.git dest=/srv/stats
+
+- name: Copy stats to host OS
+  copy:
+    src=stats
+    dest=/srv
+    mode='0644'
+
+- name: create the /srv/stats_db directory
+  file: path=/srv/stats_db state=directory

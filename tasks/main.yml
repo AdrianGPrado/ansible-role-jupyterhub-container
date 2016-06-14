@@ -22,8 +22,8 @@
 - name: pull docker images
   command: docker-compose --file /srv/jupyterhub/docker-compose.yml pull
 
-# - name: build docker images
-#   command: docker-compose build
+- name: build docker images
+  command: docker-compose --file /srv/jupyterhub/docker-compose.yml build
 
 # - name: run jupyterhub
 #   command: docker-compose up -d jupyterhub
