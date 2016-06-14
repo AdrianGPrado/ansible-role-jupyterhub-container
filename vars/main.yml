@@ -1,2 +1,24 @@
 ---
-# vars file for jupyterhub
+# vars file for docker-jupyterhub
+
+cull_docker_conf_files: cull
+jhub_docker_conf_files: jupyterhub
+stats_docker_conf_files: stats
+
+cull_docker_dir: '{{ jupyterhub_work_dir }}/{{ cull_docker_conf_files }}'
+jupytherhub_docker_dir: '{{ jupyterhub_work_dir }}/{{ jhub_docker_conf_files }}'
+jupyterhub_users_dir: '{{ jupyterhub_work_dir }}/jupyterhub_users'
+stats_docker_dir: '{{ jupyterhub_work_dir }}/{{ stats_docker_conf_files }}'
+stats_db_dir: '{{ jupyterhub_work_dir }}/stats_db'
+
+docker_images_conf_dif_folders:
+  - '{{ cull_docker_conf_files }}'
+  - '{{ jhub_docker_conf_files }}'
+  - '{{ stats_docker_conf_files }}'
+
+docker_jupyterhub_dir_structure:
+  - '{{ cull_docker_dir }}'
+  - '{{ jupytherhub_docker_dir }}'
+  - '{{ jupyterhub_users_dir }}'
+  - '{{ stats_docker_dir }}'
+  - '{{ stats_db_dir }}'
