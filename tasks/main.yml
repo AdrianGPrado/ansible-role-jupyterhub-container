@@ -6,3 +6,8 @@
 - include: jupyterhub.yml
 - include: stats.yml
 - include: cull.yml
+
+- name: Copy docker-compose file
+  template: 
+    src=docker-compose.j2
+    dest=/srv/jupyterhub/docker-compose.yml
