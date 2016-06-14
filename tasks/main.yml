@@ -4,6 +4,5 @@
   when: jupyterhub_admin_user == ''
 
 - include: jupyterhub.yml
-- include: swarm.yml
 - include: stats.yml
 - include: cull.yml
