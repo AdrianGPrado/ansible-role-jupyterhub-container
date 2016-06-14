@@ -1,29 +1,30 @@
 ---
-# tasks file for jupyterhub
-- fail: msg="jupyterhub_admin_user is not defined"
-  when: jupyterhub_admin_user == ''
+# tasks file for docker-jupyterhub
 
-- include: jupyterhub.yml
-- include: stats.yml
-- include: cull.yml
+# - fail: msg="jupyterhub_admin_user is not defined"
+#   when: jupyterhub_admin_user == ''
 
-- name: Copy docker-compose file
-  template: 
-    src=docker-compose.j2
-    dest=/srv/jupyterhub/docker-compose.yml
+# - include: jupyterhub.yml
+# - include: stats.yml
+# - include: cull.yml
 
-- name: stop docker containers
-  command: docker-compose -f /srv/jupyterhub/docker-compose.yml stop
+# - name: Copy docker-compose file
+#   template: 
+#     src=docker-compose.j2
+#     dest=/srv/jupyterhub/docker-compose.yml
 
-- name: remove docker containers
-  command: docker-compose --file /srv/jupyterhub/docker-compose.yml rm \
-                          --force --all
+# - name: stop docker containers
+#   command: docker-compose -f /srv/jupyterhub/docker-compose.yml stop
 
-- name: pull docker images
-  command: docker-compose --file /srv/jupyterhub/docker-compose.yml pull
+# - name: remove docker containers
+#   command: docker-compose --file /srv/jupyterhub/docker-compose.yml rm \
+#                           --force --all
 
-- name: build docker images
-  command: docker-compose --file /srv/jupyterhub/docker-compose.yml build
+# - name: pull docker images
+#   command: docker-compose --file /srv/jupyterhub/docker-compose.yml pull
+
+# - name: build docker images
+#   command: docker-compose --file /srv/jupyterhub/docker-compose.yml build
 
 # - name: run jupyterhub
 #   command: docker-compose up -d jupyterhub
