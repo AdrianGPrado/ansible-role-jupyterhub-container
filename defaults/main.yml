@@ -21,3 +21,26 @@ cookie_secret: ''
 # These are the usernames that will have JupyterHub admin access. This list
 # should probably be overwritten in an encrypted vault file.
 jupyterhub_admins: []
+
+# This is the password for the 'postgres' user for the JupyterHub database (the
+# database name will be 'jupyterhub')
+jpy_postgres_password: '123'
+
+# This is the path to where the docker TLS certificates are stored -- this is
+# necessary for the SwarmSpawner to actually be able to communicate with swarm
+docker_tls_path: DEFINE
+
+# These are the usernames that will have JupyterHub admin access. This list
+# should probably be overwritten in an encrypted vault file.
+jupyterhub_admins: []
+
+# These are the usernames that have access to JupyterHub, but not admin access.
+# This list should probably be overwritten in an encrypted vault file.
+jupyterhub_users: []
+
+# This is where the TLS certificates and keys should be stored for Docker
+docker_tls_path: /root/.docker
+
+# This is the port that swarm will attempt to connect to for each of the
+# Docker hosts
+docker_server_port: 2376

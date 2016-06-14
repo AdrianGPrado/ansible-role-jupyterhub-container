@@ -3,7 +3,7 @@ jpydb:
     restart: always
     environment:
       POSTGRES_DB: jupyterhub
-      POSTGRES_PASSWORD: "{# {{ jpy_postgres_password }} #}"
+      POSTGRES_PASSWORD: "{{ jpy_postgres_password }}"
       PGDATA: /var/lib/postgresql/data/jupyterhub
     volumes:
       - /srv/postgres/jupyterhub:/var/lib/postgresql/data/jupyterhub
@@ -12,28 +12,23 @@ jupyterhub:
     build: /srv/jupyterhub
     restart: always
     environment:
-      OAUTH_CLIENT_ID: "{# {{ oauth_client_id }} #}"
-      OAUTH_CLIENT_SECRET: "{# {{ oauth_client_secret }} #}"
-      OAUTH_CALLBACK_URL: "{# {{ oauth_callback_url }} #}"
-      HOSTED_DOMAIN: "{# {{ oauth_hosted_domain }} #}"
-      JPY_COOKIE_SECRET: "{# {{ cookie_secret }} #}"
+      JPY_COOKIE_SECRET: "{{ cookie_secret }}"
       JPY_DB_USER: postgres
-      JPY_DB_PASSWORD: "{# {{ jpy_postgres_password }} #}"
+      JPY_DB_PASSWORD: "{{ jpy_postgres_password }}"
       JPY_DB_NAME: jupyterhub
-      CONFIGPROXY_AUTH_TOKEN: "{# {{ configproxy_auth_token }} #}"
-      DOCKER_TLS_CERT: "{# {{ docker_tls_path }} #}/cert.pem"
-      DOCKER_TLS_KEY: "{# {{ docker_tls_path }} #}/key.pem"
-      HUB_IP: "{# {{ servicenet_ip }} #}"
-      NBGRADER_EXCHANGE: "{# {{ exchange }} #}"
+      CONFIGPROXY_AUTH_TOKEN: "{{ configproxy_auth_token }}"
+{#       DOCKER_TLS_CERT: "{{ docker_tls_path }}/cert.pem" #}
+{#       DOCKER_TLS_KEY: "{{ docker_tls_path }}/key.pem" #}
+{#       HUB_IP: "{{ servicenet_ip }}" #}
+      HUB_IP: "{{ ansible_ssh_host }}"
     volumes:
       - /srv/jupyterhub_users:/srv/jupyterhub_users
-      - "{# {{ docker_tls_path }} #}:{# {{ docker_tls_path }} #}"
-      - /var/run/restuser.sock:/restuser.sock
+{#       - "{{ docker_tls_path }}:{{ docker_tls_path }}" #}
+{#       - /var/run/restuser.sock:/restuser.sock #}
     ports:
       - "{# {{ servicenet_ip }} #}:8000:8000"
       - "{# {{ servicenet_ip }} #}:8081:8081"
     links:
-      - swarm
       - jpydb:postgres
 
 cull:
