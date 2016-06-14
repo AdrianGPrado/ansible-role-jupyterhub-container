@@ -1,0 +1,16 @@
+---
+# check if variables that can cause a failure are correctly defined
+# All this variables are defined in defaults, and should be overwritten using
+# a secure vault
+
+- fail: msg="jupyterhub_admin_user is not defined"
+  when: jupyterhub_admin_user == ''
+
+- fail: msg="configproxy_auth_token is not defined"
+  when: configproxy_auth_token == ''
+
+- fail: msg="cookie_secret is not defined"
+  when: cookie_secret == ''
+
+- fail: msg="jupyterhub_admins list is empty"
+  when: jupyterhub_admins|length == 0

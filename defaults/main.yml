@@ -1,6 +1,9 @@
 ---
-# defaults file for jupyterhub
+# defaults file for docker-jupyterhub
 
+# This is the directory in the host system from which jupyterhub will be 
+# deployed
+jupyterhub_work_dir: /srv
 
 # This is the name of an admin user of the JupyterHub instance, necessary
 # to get an API key from JupyterHub
@@ -18,17 +21,31 @@ configproxy_auth_token: ''
 # override it in an encrypted vault file.
 cookie_secret: ''
 
-# These are the usernames that will have JupyterHub admin access. This list
-# should probably be overwritten in an encrypted vault file.
-jupyterhub_admins: []
-
 # This is the password for the 'postgres' user for the JupyterHub database (the
 # database name will be 'jupyterhub')
 jpy_postgres_password: '123'
 
 # This is the path to where the docker TLS certificates are stored -- this is
 # necessary for the SwarmSpawner to actually be able to communicate with swarm
-docker_tls_path: DEFINE
+docker_tls_path: /root/.docker
+
+# This is the port that swarm will attempt to connect to for each of the
+# Docker hosts
+docker_server_port: 2376
+
+# Needed to make sure the API version matches with docker-py
+docker_api_version: 1.16
+
+# Root url of the hub (e.g. 'https://compmodels.tmpnb.org/')
+hub_base_url: ''
+
+# The password for the 'postgres' user for the nbgrader database (the database
+# name will be 'gradebook')
+gradebook_postgres_password: ''
+
+# This is the path to where the docker TLS certificates are stored -- this is
+# necessary for the SwarmSpawner to actually be able to communicate with swarm
+docker_tls_path: /root/.docker
 
 # These are the usernames that will have JupyterHub admin access. This list
 # should probably be overwritten in an encrypted vault file.
@@ -38,9 +55,6 @@ jupyterhub_admins: []
 # This list should probably be overwritten in an encrypted vault file.
 jupyterhub_users: []
 
-# This is where the TLS certificates and keys should be stored for Docker
-docker_tls_path: /root/.docker
-
-# This is the port that swarm will attempt to connect to for each of the
-# Docker hosts
-docker_server_port: 2376
+# This is the strategy that swarm will use to allocate containers. For details
+# on the different options, see the swarm documentation.
+docker_swarm_strategy: spread

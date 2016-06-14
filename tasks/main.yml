@@ -1,6 +1,12 @@
 ---
 # tasks file for docker-jupyterhub
 
+# Check sensitive variable definition.
+- include: check_variables.yml
+
+# Place the configuration files inside the folder structure
+# - include: docker_jupyterhub_file_structure.yml
+
 # - fail: msg="jupyterhub_admin_user is not defined"
 #   when: jupyterhub_admin_user == ''
 
