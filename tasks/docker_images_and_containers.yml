@@ -1,0 +1,14 @@
+---
+
+- name: pull standard docker images
+  docker_image:
+    name={{ item.name }}
+    tag={{ item.tag }}
+  with_items: '{{ list_docker_base_images }}'
+
+- name: build custom docker images
+  docker_image:
+    name={{ item.name }}
+    tag={{ item.tag }}
+    path={{ item.path }}
+  with_items: '{{ list_docker_custom_images }}'

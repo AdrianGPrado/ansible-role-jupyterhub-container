@@ -7,6 +7,9 @@
 # Place the configuration files inside the folder structure
 - include: folder_structure.yml
 
+# Build Docker images and containers
+- include: docker_images_and_containers.yml
+
 # - fail: msg="jupyterhub_admin_user is not defined"
 #   when: jupyterhub_admin_user == ''
 
