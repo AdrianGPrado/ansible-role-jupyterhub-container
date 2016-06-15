@@ -45,3 +45,15 @@
       - "{{ ansible_ssh_host }}:8081:8081"
     links:
       - jpydb:postgres
+
+- name: launch cull container
+  docker:
+    name: jcull
+    image: '{{ docker_img_cull_name }}:{{ docker_img_cull_custom_tag }}'
+    state: reloaded
+    restart_policy: always
+    command: --timeout=86400 --cull_every=3600 --url=http://jupyterhub:8081/hub
+    env:
+      JPY_API_TOKEN:
+    links:
+      - jupyterhub
