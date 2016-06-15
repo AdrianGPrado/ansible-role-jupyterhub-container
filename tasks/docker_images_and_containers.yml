@@ -19,3 +19,29 @@
       PGDATA: '{{ postgres_docker_container_PGATA }}'
     volumes:
       - '{{ postgres_docker_host_vol }}:{{ postgres_docker_container_PGATA }}'
+
+- name: launch jupyterhub container
+  docker:
+    name: jupyterhub
+    image: '{{ docker_img_jhub_name }}:{{ docker_img_jhub_custom_tag }}'
+    state: reloaded
+    restart_policy: always
+    env:
+      JPY_COOKIE_SECRET: "{{ cookie_secret }}"
+      JPY_DB_USER: postgres
+      JPY_DB_PASSWORD: "{{ jpy_postgres_password }}"
+      JPY_DB_NAME: jupyterhub
+      CONFIGPROXY_AUTH_TOKEN: "{{ configproxy_auth_token }}"
+      # DOCKER_TLS_CERT: "{{ docker_tls_path }}/cert.pem"
+      # DOCKER_TLS_KEY: "{{ docker_tls_path }}/key.pem"
+      # HUB_IP: "{{ servicenet_ip }}"
+      # HUB_IP: "{{ ansible_ssh_host }}"
+    volumes:
+      - '{{ jhub_users_docker_cont_vol }}:{{ jhub_users_docker_host_vol }}'
+      # - "{{ docker_tls_path }}:{{ docker_tls_path }}"
+      # - /var/run/restuser.sock:/restuser.sock
+    ports:
+      - "{{ ansible_ssh_host }}:8000:8000"
+      - "{{ ansible_ssh_host }}:8081:8081"
+    links:
+      - jpydb:postgres
