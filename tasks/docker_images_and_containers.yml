@@ -57,3 +57,17 @@
       JPY_API_TOKEN:
     links:
       - jupyterhub
+
+- name: launch stats container
+  docker:
+    name: jstats
+    image: '{{ docker_img_stats_name }}:{{ docker_img_stats_custom_tag }}'
+    state: reloaded
+    restart_policy: always
+    command: --file=/srv/stats_db/activity.sqlite --hub=http://jupyterhub:8081
+    env:
+      JPY_API_TOKEN:
+    volumes:
+      - /srv/stats_db:/srv/stats_db
+    links:
+      - jupyterhub
