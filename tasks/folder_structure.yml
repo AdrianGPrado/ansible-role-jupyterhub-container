@@ -13,5 +13,11 @@
     mode='0644'
   with_items: '{{ docker_images_conf_dif_folders }}'
 
+- name: Copy Dockerfile templates
+  template:
+    src={{ item.src }}
+    dest={{ item.dest }}/Dockerfile
+  with_items: '{{ docker_images_Dockerfiles }}'
+
 - name: Create jupyterhub userlist
   template: src=userlist.j2 dest={{ jupyterhub_users_dir }}/userlist

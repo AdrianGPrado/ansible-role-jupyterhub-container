@@ -1,0 +1,15 @@
+---
+
+- name: Stop all docker containers
+  shell: docker stop $(docker ps -a -q)
+  register: containers_stopped
+
+- fail: msg="Docker containers not stopped correctly"
+  when: containers_stopped | failed
+
+- name: Remove all docker containers
+  shell: docker rm $(docker ps -a -q)
+  register: containers_removed
+
+- fail: msg="Docker containers not removed correctly"
+  when: containers_removed | failed

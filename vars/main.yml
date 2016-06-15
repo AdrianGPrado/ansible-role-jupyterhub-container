@@ -24,19 +24,19 @@ docker_jupyterhub_dir_structure:
   - '{{ stats_docker_dir }}'
   - '{{ stats_db_dir }}'
 
-# ------------------- DOCKER IMAGES AND CONTAINERS --------------------
-# Default Images
-docker_img_python_name: python
-docker_img_python_standard_tag: '{{ docker_python_img_tag }}' # Def in Default
+docker_images_Dockerfiles:
+  - src:  'cull_Dockerfile.j2'
+    dest: '{{ cull_docker_dir }}'
+  - src:  'jupyterhub_Dockerfile.j2'
+    dest: '{{ jupytherhub_docker_dir }}'
+  - src:  'stats_Dockerfile.j2'
+    dest: '{{ stats_docker_dir }}'
 
-docker_img_postgres_name: postgres
-docker_img_postgres_standard_tag: '{{ docker_postgres_img_tag }}'
+# ------------------- DOCKER IMAGES AND CONTAINERS --------------------
 
 docker_img_jupyterhub_name: jupyter/jupyterhub
-docker_img_jupyterhub_standard_tag: '{{ docker_jupyterhub_img_tag }}'
 docker_img_jupyterhub_custom_tag: jhub_nrg
 
-# Created Images
 docker_img_cull_name: cull
 docker_img_cull_custom_tag: jhub_nrg
 
@@ -44,12 +44,10 @@ docker_img_stats_name: stats
 docker_img_stats_custom_tag: jhub_nrg
 
 list_docker_base_images:
-  - name: '{{ docker_img_python_name }}'
-    tag:  '{{ docker_img_python_standard_tag }}'
-  - name: '{{ docker_img_postgres_name }}'
-    tag:  '{{ docker_img_postgres_standard_tag }}'
-  # - name: '{{ docker_img_jupyterhub_name }}'
-  #   tag:  '{{ docker_img_jupyterhub_standard_tag }}'
+  - name: python
+    tag:  '{{ docker_python_img_tag }}'
+  - name: postgres
+    tag:  '{{ docker_postgres_img_tag }}'
 
 list_docker_custom_images:
   - name: '{{ docker_img_cull_name }}'
