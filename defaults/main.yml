@@ -5,7 +5,7 @@
 # deployed
 jupyterhub_work_dir: /srv
 
-docker_python_img_tag: '3'
+docker_python_img_tag: alpine
 docker_postgres_img_tag: latest
 docker_jupyterhub_img_tag: latest
 

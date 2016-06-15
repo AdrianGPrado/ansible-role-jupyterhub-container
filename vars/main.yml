@@ -9,6 +9,7 @@ stats_docker_conf_files: stats
 cull_docker_dir: '{{ jupyterhub_work_dir }}/{{ cull_docker_conf_files }}'
 jupytherhub_docker_dir: '{{ jupyterhub_work_dir }}/{{ jhub_docker_conf_files }}'
 jupyterhub_users_dir: '{{ jupyterhub_work_dir }}/jupyterhub_users'
+postgres_docker_dir: '{{ jupyterhub_work_dir}}/postgres'
 stats_docker_dir: '{{ jupyterhub_work_dir }}/{{ stats_docker_conf_files }}'
 stats_db_dir: '{{ jupyterhub_work_dir }}/stats_db'
 
@@ -34,13 +35,13 @@ docker_images_Dockerfiles:
 
 # ------------------- DOCKER IMAGES AND CONTAINERS --------------------
 
-docker_img_jupyterhub_name: jupyter/jupyterhub
-docker_img_jupyterhub_custom_tag: jhub_nrg
+docker_img_jhub_name: jupyterhub_nrg
+docker_img_jhub_custom_tag: jhub_nrg
 
-docker_img_cull_name: cull
+docker_img_cull_name: cull_nrg
 docker_img_cull_custom_tag: jhub_nrg
 
-docker_img_stats_name: stats
+docker_img_stats_name: stats_nrg
 docker_img_stats_custom_tag: jhub_nrg
 
 list_docker_custom_images:
@@ -50,7 +51,15 @@ list_docker_custom_images:
   - name: '{{ docker_img_stats_name }}'
     tag:  '{{ docker_img_stats_custom_tag }}'
     path: '{{ stats_docker_dir }}'
-  - name: '{{ docker_img_jupyterhub_name }}'
-    tag:  '{{ docker_img_jupyterhub_custom_tag }}'
+  - name: '{{ docker_img_jhub_name }}'
+    tag:  '{{ docker_img_jhub_custom_tag }}'
     path: '{{ jupytherhub_docker_dir }}'
+
+# ------------------- DOCKER VOLUMES --------------------
+
+postgres_docker_container_PGATA: /var/lib/postgresql/data/jupyterhub
+postgres_docker_host_vol: '{{ postgres_docker_dir }}/jupyterhub'
+
+jhub_users_docker_cont_vol: /srv/jupyterhub_users
+jhub_users_docker_host_vol: '{{ jupyterhub_users_dir }}'
 
