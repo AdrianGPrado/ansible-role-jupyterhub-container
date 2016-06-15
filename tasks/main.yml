@@ -7,5 +7,8 @@
 # Place the configuration files inside the folder structure
 - include: folder_structure.yml
 
-# Build Docker images and containers
-- include: docker_images_and_containers.yml
+# Build Docker images
+- include: docker_images.yml
+
+# Launch Docker containers
+- include: docker_containers.yml

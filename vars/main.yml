@@ -33,7 +33,7 @@ docker_images_Dockerfiles:
   - src:  'stats_Dockerfile.j2'
     dest: '{{ stats_docker_dir }}'
 
-# ------------------- DOCKER IMAGES AND CONTAINERS --------------------
+# ------------------- DOCKER IMAGES --------------------
 
 docker_img_jhub_name: jupyterhub_nrg
 docker_img_jhub_custom_tag: jhub_nrg
@@ -43,17 +43,6 @@ docker_img_cull_custom_tag: jhub_nrg
 
 docker_img_stats_name: stats_nrg
 docker_img_stats_custom_tag: jhub_nrg
-
-list_docker_custom_images:
-  - name: '{{ docker_img_cull_name }}'
-    tag:  '{{ docker_img_cull_custom_tag }}'
-    path: '{{ cull_docker_dir }}'
-  - name: '{{ docker_img_stats_name }}'
-    tag:  '{{ docker_img_stats_custom_tag }}'
-    path: '{{ stats_docker_dir }}'
-  - name: '{{ docker_img_jhub_name }}'
-    tag:  '{{ docker_img_jhub_custom_tag }}'
-    path: '{{ jupytherhub_docker_dir }}'
 
 # ------------------- DOCKER VOLUMES --------------------
 

@@ -1,12 +1,5 @@
 ---
 
-- name: build custom docker images
-  docker_image:
-    name={{ item.name }}
-    tag={{ item.tag }}
-    path={{ item.path }}
-  with_items: '{{ list_docker_custom_images }}'
-
 - name: launch postgres container
   docker:
     name: jpydb

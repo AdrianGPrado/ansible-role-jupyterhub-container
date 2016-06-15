@@ -1,0 +1,22 @@
+---
+
+- name: build custom docker images
+  docker_image:
+    name={{ item.name }}
+    tag={{ item.tag }}
+    path={{ item.path }}
+  with_items:
+    - name: '{{ docker_img_cull_name }}'
+      tag:  '{{ docker_img_cull_custom_tag }}'
+      path: '{{ cull_docker_dir }}'
+    - name: '{{ docker_img_stats_name }}'
+      tag:  '{{ docker_img_stats_custom_tag }}'
+      path: '{{ stats_docker_dir }}'
+    - name: '{{ docker_img_jhub_name }}'
+      tag:  '{{ docker_img_jhub_custom_tag }}'
+      path: '{{ jupytherhub_docker_dir }}'
+
+# TODO:
+# - Clean old images
+#     - Stop containers based on old images
+#     - delete the old image
