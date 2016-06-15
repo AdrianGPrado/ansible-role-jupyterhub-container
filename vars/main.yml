@@ -43,12 +43,6 @@ docker_img_cull_custom_tag: jhub_nrg
 docker_img_stats_name: stats
 docker_img_stats_custom_tag: jhub_nrg
 
-list_docker_base_images:
-  - name: python
-    tag:  '{{ docker_python_img_tag }}'
-  - name: postgres
-    tag:  '{{ docker_postgres_img_tag }}'
-
 list_docker_custom_images:
   - name: '{{ docker_img_cull_name }}'
     tag:  '{{ docker_img_cull_custom_tag }}'
@@ -56,7 +50,7 @@ list_docker_custom_images:
   - name: '{{ docker_img_stats_name }}'
     tag:  '{{ docker_img_stats_custom_tag }}'
     path: '{{ stats_docker_dir }}'
-  # - name: '{{ docker_img_jupyterhub_name }}'
-  #   tag:  '{{ docker_img_jupyterhub_custom_tag }}'
-  #   path: '{{ jupytherhub_docker_dir }}'
+  - name: '{{ docker_img_jupyterhub_name }}'
+    tag:  '{{ docker_img_jupyterhub_custom_tag }}'
+    path: '{{ jupytherhub_docker_dir }}'
 
