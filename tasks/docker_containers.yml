@@ -1,5 +1,23 @@
 ---
 
+- name: launch docker swarm
+  docker:
+    name: jphwarm
+    image: dockerswarm/swarm
+    state: reloaded
+    restart_policy: always
+    command: manage --strategy={{ docker_swarm_strategy }} \
+                    file:///root/.swarm/cluster
+                    # --tlsverify \
+                    # --tlscacert={{ docker_tls_path }}/ca.pem \
+                    # --tlscert={{ docker_tls_path }}/cert.pem \
+                    # --tlskey={{ docker_tls_path }}/key.pem
+    volumes:
+      - /root/.swarm:/root/.swarm
+      - "{{ docker_tls_path }}:{{ docker_tls_path }}"
+    ports:
+      - "127.0.0.1:2375:2375"
+
 - name: launch postgres container
   docker:
     name: jpydb
@@ -45,7 +63,9 @@
     image: '{{ docker_img_cull_name }}:{{ docker_img_cull_custom_tag }}'
     state: reloaded
     restart_policy: always
-    command: --timeout=86400 --cull_every=3600 --url=http://jupyterhub:8081/hub
+    command: --timeout=86400 \
+             --cull_every=3600 \
+             --url=http://jupyterhub:8081/hub
     env:
       JPY_API_TOKEN:
     links:
@@ -57,7 +77,8 @@
     image: '{{ docker_img_stats_name }}:{{ docker_img_stats_custom_tag }}'
     state: reloaded
     restart_policy: always
-    command: --file=/srv/stats_db/activity.sqlite --hub=http://jupyterhub:8081
+    command: --file=/srv/stats_db/activity.sqlite i\
+             --hub=http://jupyterhub:8081
     env:
       JPY_API_TOKEN:
     volumes:

@@ -1,13 +1,14 @@
 ---
 # defaults file for docker-jupyterhub
 
-# This is the directory in the host system from which jupyterhub will be 
+# This is the directory in the host system from which jupyterhub will be
 # deployed
 jupyterhub_work_dir: /srv
 
 docker_python_img_tag: alpine
 docker_postgres_img_tag: latest
 docker_jupyterhub_img_tag: latest
+docker_swarm_img_tag: latest
 
 # This is the name of an admin user of the JupyterHub instance, necessary
 # to get an API key from JupyterHub
