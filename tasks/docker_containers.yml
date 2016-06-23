@@ -7,6 +7,7 @@
     state: absent
   with_items: '{{ docker_container_list }}'
 
+# TODO: Use Kubernetes and Flannel to secure the container network
 - name: launch docker swarm
   docker:
     name: '{{ docker_swarm_cont_name }}'
