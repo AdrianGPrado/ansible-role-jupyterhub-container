@@ -35,14 +35,49 @@ docker_images_Dockerfiles:
 
 # ------------------- DOCKER IMAGES --------------------
 
-docker_img_jhub_name: jupyterhub_nrg
-docker_img_jhub_custom_tag: jhub_nrg
+docker_jhub_img_name: jupyterhub_nrg
+docker_jhub_img_custom_tag: jhub_nrg
 
-docker_img_cull_name: cull_nrg
-docker_img_cull_custom_tag: jhub_nrg
+docker_cull_img_name: cull_nrg
+docker_cull_img_custom_tag: jhub_nrg
 
-docker_img_stats_name: stats_nrg
-docker_img_stats_custom_tag: jhub_nrg
+docker_stats_img_name: stats_nrg
+docker_stats_img_custom_tag: jhub_nrg
+
+# Default images names, tags are in defaults/main.yml
+docker_swarm_img_name: dockerswarm/swarm
+docker_python_img_name: python
+docker_jupyter_jupyterhub_img_name: jupyter/jupyterhubs
+docker_postgres_img_name: postgres
+
+docker_img_list:
+  - '{{ docker_jhub_img_name }}:{{ docker_jhub_img_custom_tag }}'
+  - '{{ docker_cull_img_name }}:{{ docker_cull_img_custom_tag }}'
+  - '{{ docker_stats_img_name }}:{{ docker_stats_img_custom_tag }}'
+  - '{{ docker_python_img_name }}:{{ docker_python_img_tag }}'
+  - '{{ docker_postgres_img_name }}:{{ docker_postgres_img_tag }}'
+  - '{{ docker_swarm_img_name }}:{{ docker_swarm_img_tag }}'
+  - '{{ docker_jupyter_jupyterhub_img_name }}:{{ docker_jupyterhub_img_tag }}'
+
+# ------------------- DOCKER CONTAINERS --------------------
+
+docker_postgres_cont_name: jpydb
+docker_jhub_cont_name: jupyterhub
+docker_cull_cont_name: jcull
+docker_stats_cont_name: jstats
+docker_swarm_cont_name: jphwarm
+
+docker_container_list:
+  - name:  '{{ docker_postgres_cont_name }}'
+    image: '{{ docker_postgres_img_name }}'
+  - name:  '{{ docker_jhub_cont_name }}'
+    image: '{{ docker_jhub_img_name }}'
+  - name:  '{{ docker_cull_cont_name }}'
+    image: '{{ docker_cull_img_name }}'
+  - name:  '{{ docker_stats_cont_name }}'
+    image: '{{ docker_stats_img_name }}'
+  - name:  '{{ docker_swarm_cont_name }}'
+    image: '{{ docker_swarm_img_name }}'
 
 # ------------------- DOCKER VOLUMES --------------------
 
@@ -51,4 +86,3 @@ postgres_docker_host_vol: '{{ postgres_docker_dir }}/jupyterhub'
 
 jhub_users_docker_cont_vol: /srv/jupyterhub_users
 jhub_users_docker_host_vol: '{{ jupyterhub_users_dir }}'
-

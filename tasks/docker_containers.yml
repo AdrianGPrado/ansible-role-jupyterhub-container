@@ -1,9 +1,16 @@
 ---
 
+- name: remove all running containers
+  docker:
+    name: '{{ item.name }}'
+    image: '{{ item.image }}'
+    state: absent
+  with_items: '{{ docker_container_list }}'
+
 - name: launch docker swarm
   docker:
-    name: jphwarm
-    image: dockerswarm/swarm
+    name: '{{ docker_swarm_cont_name }}'
+    image: '{{ docker_swarm_img_name }}'
     state: reloaded
     restart_policy: always
     command: manage --strategy={{ docker_swarm_strategy }} \
@@ -20,8 +27,8 @@
 
 - name: launch postgres container
   docker:
-    name: jpydb
-    image: postgres
+    name: '{{ docker_postgres_cont_name }}'
+    image: '{{ docker_postgres_img_name }}'
     state: reloaded
     restart_policy: always
     env:
@@ -33,8 +40,8 @@
 
 - name: launch jupyterhub container
   docker:
-    name: jupyterhub
-    image: '{{ docker_img_jhub_name }}:{{ docker_img_jhub_custom_tag }}'
+    name: '{{ docker_jhub_cont_name }}'
+    image: '{{ docker_jhub_img_name }}:{{ docker_jhub_img_custom_tag }}'
     state: reloaded
     restart_policy: always
     env:
@@ -45,8 +52,7 @@
       CONFIGPROXY_AUTH_TOKEN: "{{ configproxy_auth_token }}"
       # DOCKER_TLS_CERT: "{{ docker_tls_path }}/cert.pem"
       # DOCKER_TLS_KEY: "{{ docker_tls_path }}/key.pem"
-      # HUB_IP: "{{ servicenet_ip }}"
-      # HUB_IP: "{{ ansible_ssh_host }}"
+      HUB_IP: "{{ ansible_ssh_host }}"
     volumes:
       - '{{ jhub_users_docker_cont_vol }}:{{ jhub_users_docker_host_vol }}'
       # - "{{ docker_tls_path }}:{{ docker_tls_path }}"
@@ -59,8 +65,8 @@
 
 - name: launch cull container
   docker:
-    name: jcull
-    image: '{{ docker_img_cull_name }}:{{ docker_img_cull_custom_tag }}'
+    name: '{{ docker_cull_cont_name }}'
+    image: '{{ docker_cull_img_name }}:{{ docker_cull_img_custom_tag }}'
     state: reloaded
     restart_policy: always
     command: --timeout=86400 \
@@ -73,8 +79,8 @@
 
 - name: launch stats container
   docker:
-    name: jstats
-    image: '{{ docker_img_stats_name }}:{{ docker_img_stats_custom_tag }}'
+    name: '{{ docker_stats_cont_name }}'
+    image: '{{ docker_stats_img_name }}:{{ docker_stats_img_custom_tag }}'
     state: reloaded
     restart_policy: always
     command: --file=/srv/stats_db/activity.sqlite i\
